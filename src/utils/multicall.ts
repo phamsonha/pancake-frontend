@@ -15,16 +15,22 @@ interface MulticallOptions {
 const multicall = async <T = any>(abi: any[], calls: Call[]): Promise<T> => {
   try {
     const multi = getMulticallContract()
+    // console.log (`getMulticallContract(): ${getMulticallContract().address}`)
     const itf = new ethers.utils.Interface(abi)
 
     const calldata = calls.map((call) => [call.address.toLowerCase(), itf.encodeFunctionData(call.name, call.params)])
+    // console.log ("calldata:")
+    // console.log (calldata)
     const { returnData } = await multi.aggregate(calldata)
+
 
     const res = returnData.map((call, i) => itf.decodeFunctionResult(calls[i].name, call))
 
+    // console.log ("res:")
+    // console.log (res)
     return res
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error.toString())
   }
 }
 

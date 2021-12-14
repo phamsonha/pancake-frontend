@@ -1844,15 +1844,16 @@ export const mainnetTokens = {
 export const testnetTokens = {
   wbnb: new Token(
     TESTNET,
-    '0x094616F0BdFB0b526bD735Bf66Eca0Ad254ca81F',
+    '0x9d6bA3A2c3ff9F61e0695436Aa8084Da55D46222',
     18,
     'WBNB',
     'Wrapped BNB',
     'https://www.binance.com/',
   ),
+  bnb: new Token(TESTNET, '0x9d6bA3A2c3ff9F61e0695436Aa8084Da55D46222', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
   cake: new Token(
     TESTNET,
-    '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
+    '0xb4A6BC49A4879C499cb80063C33F500eF5b9926f',
     18,
     'CAKE',
     'PancakeSwap Token',
@@ -1868,7 +1869,7 @@ export const testnetTokens = {
   ),
   syrup: new Token(
     TESTNET,
-    '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',
+    '0x5753C627fD6258DC6C850eb84b9F2B0688196cDc',
     18,
     'SYRUP',
     'SyrupBar Token',
@@ -1881,6 +1882,14 @@ export const testnetTokens = {
     'BAKE',
     'Bakeryswap Token',
     'https://www.bakeryswap.org/',
+  ),
+  qsd: new Token(
+    TESTNET,
+    '0x00dff6ec0b03fa74eb15c309e1d4a5b5b36556ab',
+    18,
+    'QSD',
+    'QIAN second generation dollar',
+    'https://chemix.io/home',
   ),
 }
 

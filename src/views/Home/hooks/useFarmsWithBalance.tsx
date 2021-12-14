@@ -27,8 +27,16 @@ const useFarmsWithBalance = () => {
         params: [farm.pid, account],
       }))
 
+      // console.log (`getMasterChefAddress: ${getMasterChefAddress()}`)
+      // console.log ("calls:")
+      // console.log (calls)
+
       const rawResults = await multicall(masterChefABI, calls)
+
       const results = farmsConfig.map((farm, index) => ({ ...farm, balance: new BigNumber(rawResults[index]) }))
+      // console.log ("results:")
+      // console.log (results)
+
       const farmsWithBalances = results.filter((balanceType) => balanceType.balance.gt(0))
       const totalEarned = farmsWithBalances.reduce((accum, earning) => {
         const earningNumber = new BigNumber(earning.balance)
