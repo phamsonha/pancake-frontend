@@ -1,11 +1,11 @@
 import React from 'react'
 import { useLocation } from 'react-router'
-import { Menu as UikitMenu } from '@pancakeswap/uikit'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 /* import PhishingWarningBanner from 'components/PhishingWarningBanner' */
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/farms/hooks'
+import  { Menu as UikitMenu}  from "../widgets/Menu"
 /* import { usePhishingBannerManager } from 'state/user/hooks' */
 import config from './config/config'
 import UserMenu from './UserMenu'
