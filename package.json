@@ -31,6 +31,7 @@
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
     "@ethersproject/experimental": "^5.0.1",
+    "@pancakeswap-libs/uikit": "^0.29.4",
     "@pancakeswap/sdk": "^2.4.0",
     "@pancakeswap/uikit": "^0.59.0",
     "@reduxjs/toolkit": "^1.5.0",
@@ -96,7 +97,6 @@
     "cypress": "^8.3.1",
     "eslint": "^7.26.0",
     "eslint-plugin-cypress": "^2.11.3",
-    "husky": "^7.0.0",
     "prettier": "^2.3.0",
     "serve": "^12.0.0",
     "source-map-explorer": "^2.5.2",
