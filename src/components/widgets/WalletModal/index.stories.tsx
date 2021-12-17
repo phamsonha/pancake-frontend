@@ -20,3 +20,4 @@ export const Wallet: React.FC = () => {
     </Flex>
   );
 };
+ 
