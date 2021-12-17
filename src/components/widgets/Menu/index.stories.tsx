@@ -19,8 +19,7 @@ const langs: LangType[] = [...Array(20)].map((_, i) => ({ code: `en${i}`, langua
 const useProps = () => {
   const [props, setProps] = useState({
     account: "0xbdda50183d817c3289f895a4472eb475967dc980",
-    login: noop,
-    logout: noop,
+    logout: noop, 
     isDark: false,
     toggleTheme: noop,
     langs,
@@ -35,7 +34,6 @@ const useProps = () => {
     const interval = setInterval(() => {
       setProps({
         account: "0xbdda50183d817c3289f895a4472eb475967dc980",
-        login: noop,
         logout: noop,
         isDark: false,
         toggleTheme: noop,
@@ -88,7 +86,6 @@ export const NotConnected: React.FC = () => {
     <BrowserRouter>
       <Menu
         account={null}
-        login={noop}
         logout={noop}
         isDark
         toggleTheme={noop}
@@ -119,7 +116,6 @@ export const WithNoProfile: React.FC = () => {
     <BrowserRouter>
       <Menu
         account="0xbdda50183d817c3289f895a4472eb475967dc980"
-        login={noop}
         logout={noop}
         isDark={false}
         toggleTheme={noop}
@@ -161,7 +157,6 @@ export const WithProfile: React.FC = () => {
     <BrowserRouter>
       <Menu
         account="0xbdda50183d817c3289f895a4472eb475967dc980"
-        login={noop}
         logout={noop}
         isDark={false}
         toggleTheme={noop}
@@ -215,7 +210,6 @@ export const WithSubmenuSelected: React.FC = () => {
     <MemoryRouter initialEntries={["/teams"]}>
       <Menu
         account="0xbdda50183d817c3289f895a4472eb475967dc980"
-        login={noop}
         logout={noop}
         isDark={false}
         toggleTheme={noop}

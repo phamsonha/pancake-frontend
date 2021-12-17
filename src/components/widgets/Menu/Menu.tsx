@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import throttle from "lodash/throttle";
 import { Flex } from '@pancakeswap/uikit';
+import UserMenu from "components/Menu/UserMenu";
 import { Overlay } from "../../Overlay"
 import useMatchBreakpoints from "../../../hooks/useMatchBreakpoints";
 import Logo from "./components/Logo";
 import Panel from "./components/Panel";
-import UserBlock from "./components/UserBlock";
-import { NavProps } from "./types";
-import Avatar from "./components/Avatar";
+import { NavProps } from "./types"; 
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
 
 const Wrapper = styled.div`
@@ -62,9 +61,6 @@ const MobileOnlyOverlay = styled(Overlay)`
 `;
 
 const Menu: React.FC<NavProps> = ({
-  account,
-  login,
-  logout,
   isDark,
   toggleTheme,
   langs,
@@ -72,7 +68,6 @@ const Menu: React.FC<NavProps> = ({
   currentLang,
   cakePriceUsd,
   links,
-  profile,
   children,
 }) => {
   const { isXl } = useMatchBreakpoints();
@@ -123,8 +118,9 @@ const Menu: React.FC<NavProps> = ({
           href={homeLink?.href ?? "/"}
         />
         <Flex>
-          <UserBlock account={account} login={login} logout={logout} />
-          {profile && <Avatar profile={profile} />}
+          {/* <UserBlock account={account} login={login} logout={logout} />
+          {profile && <Avatar profile={profile} />} */}
+          <UserMenu/>
         </Flex>
       </StyledNav>
       <BodyWrapper>

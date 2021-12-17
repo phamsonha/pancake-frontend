@@ -8,7 +8,6 @@ import { usePriceCakeBusd } from 'state/farms/hooks'
 import  { Menu as UikitMenu}  from "../widgets/Menu"
 /* import { usePhishingBannerManager } from 'state/user/hooks' */
 import config from './config/config'
-import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
@@ -25,7 +24,7 @@ const Menu = (props) => {
 
   return (
     <UikitMenu
-      userMenu={<UserMenu />}
+      // userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
       /* banner={showPhishingWarningBanner && <PhishingWarningBanner />} */
       isDark={isDark}

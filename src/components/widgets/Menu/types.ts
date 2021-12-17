@@ -1,5 +1,3 @@
-import { Login } from "../WalletModal/types";
-
 export interface LangType {
   code: string;
   language: string;
@@ -50,7 +48,6 @@ export interface PanelProps {
 
 export interface NavProps extends PanelProps {
   account?: string;
-  login: Login;
   profile?: Profile;
-  logout: () => void;
+  logout?: () => void;
 }
