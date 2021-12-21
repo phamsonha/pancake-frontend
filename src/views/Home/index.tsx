@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import styled from 'styled-components'
 import { Flex } from '@pancakeswap/uikit'
@@ -22,7 +23,7 @@ const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding-top: 48px;
+    padding-top: 148px;
   }
 `
 
@@ -66,16 +67,16 @@ const Home: React.FC = () => {
             <UserBanner />
           </UserBannerWrapper>
         )}
-        <Flex
+        {/* <Flex
           pt={[account ? '220px' : '0', null, null, account ? '76px' : '0']}
           mt={[account ? '0' : '-16px', null, null, account ? '0' : '-48px']}
           pb="24px"
         >
           <CompetitionBanner />
-        </Flex>
-        <Hero />
+        </Flex> */}
+        {/* <Hero /> */}
       </StyledHeroSection>
-      <PageSection
+      {/* <PageSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         background={
           theme.isDark
@@ -134,15 +135,15 @@ const Home: React.FC = () => {
       >
         <SalesSection {...cakeSectionData} />
         <CakeDataRow />
-      </PageSection>
-      <PageSection
+      </PageSection> */}
+      {/* <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background="linear-gradient(180deg, #7645D9 0%, #5121B1 100%)"
         index={2}
         hasCurvedDivider={false}
       >
         <Footer />
-      </PageSection>
+      </PageSection> */}
     </>
   )
 }

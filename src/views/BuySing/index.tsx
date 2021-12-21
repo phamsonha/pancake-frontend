@@ -4,20 +4,17 @@
 /* eslint-disable camelcase */
 import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { CurrencyAmount, Pair } from '@pancakeswap/sdk'
 import { Text, Flex, CardBody, CardFooter, Button, AddIcon, Radio, Tag } from '@pancakeswap/uikit'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import API from 'libs/api'
-import { SmartContractInterface } from 'types'
-import { useDerivedSwapInfo } from 'state/swap/hooks'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
-import { Field } from 'state/swap/actions'
+import { HistoryTransaction, SmartContractInterface } from 'types'
 import { AutoColumn } from 'components/Layout/Column'
-import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { RowBetween } from 'components/Layout/Row'
-import FullPositionCard from '../../components/PositionCard'
+import { useGetBnbBalance } from 'hooks/useTokenBalance'
+import { formatBigNumber } from 'utils/formatBalance'
+import Web3 from 'web3';
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
@@ -65,7 +62,9 @@ const Container = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.inset};
 `
 
-export default function Pool() {
+const web3 = new Web3(Web3.givenProvider);
+
+export default function BuyToken() {
   const { account, chainId, library } = useActiveWeb3React()
   const { t } = useTranslation()
   const api = new API()
@@ -85,9 +84,7 @@ export default function Pool() {
     liquidityTokens,
   )
 
-  const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo()
-  const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
-
+  const { balance, fetchStatus } = useGetBnbBalance()
 
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
@@ -107,7 +104,6 @@ export default function Pool() {
   const [pending, setPending] = useState(false)
   const [indexContract, setIndexContract] = useState(0)
   const [contractList, setContractList] = useState<SmartContractInterface[]>([])
-  const [balance, setBalance] = React.useState<number>()
   const [amountSing, setAmountSing] = useState<number>(0)
   const [amountBNB, setAmountBNB] = useState<string>("0")
   const [ratio, setRatio] = useState<number>(0)
@@ -161,12 +157,6 @@ export default function Pool() {
     // setLoading(false)
   }
 
-  const getBalance = async () => {
-    if (maxAmountInput) {
-      setBalance(parseFloat(maxAmountInput.toExact()))
-    }
-  }
-
   React.useEffect((): any => {
 
     if (chainId) {
@@ -175,10 +165,6 @@ export default function Pool() {
       setContractList(undefined)
     }
 
-    if (!!account && !!library) {
-
-      getBalance()
-    }
   }, [account, library, chainId])
 
   React.useEffect(() => {
@@ -204,7 +190,7 @@ export default function Pool() {
   const handleAmountChange = (val) => {
     console.log(val)
     setAmountBNB(val === "" ? "0" : val)
-    if (parseFloat(val) > balance) {
+    if (parseFloat(val) > parseFloat(formatBigNumber(balance, 6))) {
       setInfo("Amount is over balance")
     }
     else {
@@ -216,11 +202,69 @@ export default function Pool() {
   const handleAddressChange = (val) => {
     console.log(val)
     setBenefi(val)
-  
+
   }
 
   const onMax = () => {
-    setAmountBNB(balance.toFixed(6))
+    setAmountBNB(formatBigNumber(balance, 6))
+  }
+
+  const logTransaction = async (hi: HistoryTransaction) => {
+    await api.postBuy(hi.hash, hi.from_address, hi.to_address,
+      hi.amount, hi.amount_sing, hi.price_sing, hi.payment_method, hi.network_id).then(
+        (result) => {
+          if ("error" in result) {
+            console.log("error", result)
+            return
+          }
+          console.log("log transaction success", result)
+        },
+        (error) => {
+          console.log(error?.message)
+        }
+      )
+  }
+
+  const isValidBuy = (benefi.length > 0
+    && parseFloat(amountBNB) > 0
+    && ratio && parseFloat(amountBNB) < parseFloat(formatBigNumber(balance, 6)))
+
+  const handleSummit = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    setPending(true)
+    if (web3 !== null && chainId !== undefined && account !== null && amountBNB && contractList) {
+      await api.crowdSale(contractList[indexContract], web3, chainId, account, benefi, parseFloat(amountBNB)).then(
+        (value) => {
+          console.log(`crowSale return: ${value?.hash}`)
+          // setType("success")
+          // setMessage("Buy Success, please check your wallet")
+          if (value?.hash === undefined) {
+            console.log("Transaction failed, please try again.")
+            return
+          }
+
+          // log transaction
+          const hi: HistoryTransaction = {
+            hash: value?.hash,
+            from_address: value?.purchaser,
+            to_address: value?.beneficiary,
+            amount: parseFloat(amountBNB),
+            amount_sing: value?.weiAmount,
+            price_sing: priceSing,
+            payment_method: "BNB",
+            network_id: chainId,
+
+          }
+
+          logTransaction(hi)
+
+
+        }).catch((error) => {
+          console.error(error)
+        })
+    }
+    setPending(false)
   }
 
   const renderBody = () => {
@@ -246,7 +290,7 @@ export default function Pool() {
               {t('Enter your BNB:')}
             </Text>
             <Text color="textSubtle">
-              Balance: {balance.toFixed(6)}
+              Balance: {balance ? formatBigNumber(balance, 6) : "loading"}
             </Text>
           </Flex>
           <InputPanel>
@@ -264,7 +308,7 @@ export default function Pool() {
               </LabelRow>
               <InputRow selected>
                 <Text color="red" fontSize='12px'>{info}</Text>
-                {account && parseFloat(amountBNB) < balance && (
+                {account && parseFloat(amountBNB) < parseFloat(formatBigNumber(balance, 6)) && (
                   <Button onClick={onMax} scale="xs" variant="secondary">
                     MAX
                   </Button>
@@ -296,19 +340,19 @@ export default function Pool() {
 
           <Flex mt="6px" alignItems="center" justifyContent="flex-start">
             <Text bold>
-              {t('Beneficiary will get:')}
+              {t('Beneficiary will get: ')}
             </Text>
             <Text color="textSubtle">
-              {amountSing.toFixed(6)}SING
+              {amountSing.toFixed(6)}&nbsp;SING
             </Text>
           </Flex>
 
           <Flex mb="6px" alignItems="center" justifyContent="flex-start">
             <Text bold>
-              {t('Ratio:')}
+              {t('Ratio: ')}
             </Text>
             <Text color="textSubtle">
-              1BNB ≈ {ratio.toFixed(6)}SING
+              1&nbsp;BNB ≈ {ratio.toFixed(6)}&nbsp;SING
             </Text>
           </Flex>
           <div>
@@ -323,9 +367,9 @@ export default function Pool() {
             ))}
             {indexContract !== undefined &&
               <div>
-                <Text bold>SmartContract Address:</Text>
+                <Text bold>SmartContract Address:&nbsp;</Text>
                 <Text>{contractList[indexContract].address}</Text>
-                <Text bold>Term:</Text>
+                <Text bold>Term:&nbsp;</Text>
                 <Text color="red" fontSize='12px' style={{ whiteSpace: "pre-wrap", textAlign: 'left' }}>{contractList[indexContract].term}</Text>
               </div>
             }
@@ -349,11 +393,11 @@ export default function Pool() {
           {renderBody()}
         </Wrapper>
         <CardFooter style={{ textAlign: 'center' }}>
-          <Button id="join-pool-button" as={Link} to="#" width="100%" startIcon={<AddIcon color="white" />}>
+          <Button disabled={!isValidBuy} id="join-pool-button" onClick={handleSummit} as={Link} to="#" width="100%" startIcon={<AddIcon color="white" />}>
             {t('Buy Sing Token')}
           </Button>
         </CardFooter>
       </AppBody>
     </Page>
   )
-}
+} 

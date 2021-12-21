@@ -36,11 +36,11 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
       },
       {
         label: t('Lock & Transfer SING'),
-        href: '/lock-transfer',
+        href: '/transfer-sing',
       },
       {
         label: t('Check Token Lock'),
-        href: '/check-lock',
+        href: '/check-sing',
       },
     ],
   },

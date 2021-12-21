@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import {
@@ -42,11 +43,10 @@ const UserMenu = () => {
         {t('Transactions')}
       </UserMenuItem>
       <UserMenuDivider />
-      <UserMenuItem as="button" onClick={() => history.push(`${nftsBaseUrl}/profile/${account.toLowerCase()}`)}>
+      {/* <UserMenuItem as="button" onClick={() => history.push(`${nftsBaseUrl}/profile/${account.toLowerCase()}`)}>
         {t('Your NFTs')}
       </UserMenuItem>
-      <ProfileUserMenuItem isLoading={isLoading} hasProfile={hasProfile} />
-      <UserMenuDivider />
+      <ProfileUserMenuItem isLoading={isLoading} hasProfile={hasProfile} /> */}
       <UserMenuItem as="button" onClick={logout}>
         <Flex alignItems="center" justifyContent="space-between" width="100%">
           {t('Disconnect')}

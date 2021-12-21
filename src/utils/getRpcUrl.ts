@@ -1,4 +1,5 @@
-import sample from 'lodash/sample'
+/* eslint-disable no-console */
+import sample from 'lodash/sample' 
 
 if (
   process.env.NODE_ENV !== 'production' &&

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { lazy } from 'react'
 import { Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from '@pancakeswap/uikit'
@@ -57,6 +58,8 @@ const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 // const PancakeSquad = lazy(() => import('./views/PancakeSquad'))
 // SING TOKEN
 const BuySing = lazy(() => import('./views/BuySing'))
+const TransferSing = lazy(() => import('./views/TransferSing'))
+const CheckSing = lazy(() => import('./views/CheckSing'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -84,7 +87,7 @@ const App: React.FC = () => {
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
             <Route path="/" exact>
-              <Home />
+            <Redirect to="/swap" />
             </Route>
             <Route path="/farms">
               <Farms />
@@ -97,7 +100,12 @@ const App: React.FC = () => {
             <Route path="/buy-sing">
               <BuySing />
             </Route>
-
+            <Route path="/transfer-sing">
+              <TransferSing />
+            </Route>
+            <Route path="/check-sing">
+              <CheckSing />
+            </Route>
 
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
