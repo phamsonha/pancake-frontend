@@ -271,7 +271,7 @@ export default function BuyToken() {
     if (!account) {
       return (
         <Text color="textSubtle" textAlign="center">
-          {t('Connect to a wallet to view your liquidity.')}
+          {t('Connect to a wallet to buy Sing token.')}
         </Text>
       )
     }

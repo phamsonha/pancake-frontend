@@ -339,10 +339,10 @@ export default function TransferSing() {
         <AutoColumn gap="md">
           <Flex mb="1px" alignItems="flex-start" flexDirection="column" justifyContent="space-between">
             <Text bold>
-              {t('Total balance')}:&nbsp;{balance ? `${balance.toFixed(6)} SING` : "loading"}
+              {t('Total balance')}:&nbsp;{balance !== undefined ? `${balance.toFixed(6)} SING` : "loading"}
             </Text>
             <Text color="textSubtle">
-              {t('Balance avaliable')}:&nbsp;{balanceAvailable ? `${balanceAvailable.toFixed(6)} SING` : "loading"}
+              {t('Balance avaliable')}:&nbsp;{balanceAvailable !== undefined ? `${balanceAvailable.toFixed(6)} SING` : "loading"}
             </Text>
           </Flex>
 

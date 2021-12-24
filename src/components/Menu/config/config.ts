@@ -31,11 +31,11 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
     icon: 'Trophy',
     items: [
       {
-        label: t('Buy SING'),
+        label: t('Buy SING Token'),
         href: '/buy-sing',
       },
       {
-        label: t('Lock & Transfer SING'),
+        label: t('Transfer SING Token'),
         href: '/transfer-sing',
       },
       {
