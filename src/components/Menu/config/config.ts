@@ -42,6 +42,10 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
         label: t('Check Token Lock'),
         href: '/check-sing',
       },
+      {
+        label: t('Vesting'),
+        href: '/vesting',
+      },
     ],
   },
 ]

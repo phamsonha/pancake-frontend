@@ -60,6 +60,7 @@ const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 const BuySing = lazy(() => import('./views/BuySing'))
 const TransferSing = lazy(() => import('./views/TransferSing'))
 const CheckSing = lazy(() => import('./views/CheckSing'))
+const VestingSing = lazy(() => import('./views/Vesting'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -105,6 +106,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/check-sing">
               <CheckSing />
+            </Route>
+            <Route path="/vesting">
+              <VestingSing />
             </Route>
 
 

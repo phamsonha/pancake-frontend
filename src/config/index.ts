@@ -35,3 +35,10 @@ export const AUCTION_WHITELISTED_BIDDERS_TO_FETCH = 500
 export const IPFS_GATEWAY = 'https://ipfs.io/ipfs'
 // In reality its 10000 because of fast refresh, a bit less here to cover for possible long request times
 export const PANCAKE_BUNNIES_UPDATE_FREQUENCY = 8000
+export const VESTING_CONTRACT='0x2872f65fdd43D13A9627C9b704eCeAFE4802e214';
+export const SINGSING_CONTRACT='0x5f2ED3299a8d5801848dCeD1C2408fd696F951a8';
+
+export const TX_SCANERS = {
+	56: "https://bscscan.com/tx/",
+	97: 'https://testnet.bscscan.com/tx/'
+};
